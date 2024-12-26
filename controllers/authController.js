@@ -8,12 +8,12 @@ exports.authControllerLoginFunc = async (req, res) => {
     });
 
     if (loginRequest.password === incomingData.password) {
-      console.log(loginRequest.userCausePreferences);
-      
       res.json({
         username: loginRequest.username,
         password: loginRequest.password,
         userPreferences: loginRequest.userCausePreferences,
+        badgesEarned: loginRequest.badgesEarned,
+        userId: loginRequest.id,
         success: true,
         message: "login done",
       });
@@ -25,8 +25,6 @@ exports.authControllerLoginFunc = async (req, res) => {
 };
 
 exports.authControllerSignupFunc = async (req, res) => {
-  console.log("sign");
-
   try {
     const checkUser = await userModel.findOne({ username: req.body.username });
     if (checkUser) {
@@ -38,9 +36,17 @@ exports.authControllerSignupFunc = async (req, res) => {
       const register = await userModel.create({
         username: req.body.username,
         password: req.body.password,
+        badgesEarned: ["Welcome Changemaker"],
       });
       console.log(register);
-      res.json({ success: true, register, message: "user registeration done" });
+
+      res.json({
+        success: true,
+        message: "user registeration done",
+        username: register.username,
+        badgesEarned: register.badgesEarned,
+        userId: register.id
+      });
     }
   } catch (error) {
     console.log(error);
@@ -50,4 +56,3 @@ exports.authControllerSignupFunc = async (req, res) => {
     });
   }
 };
-

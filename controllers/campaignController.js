@@ -1,9 +1,7 @@
 const campaignModel = require("../models/campaignModel")
 
 
-exports.fetchCampaignsController = async (req, res) => {
-    console.log("backend campagin");
-    
+exports.fetchCampaignsController = async (req, res) => {    
     try {
         const fetchAllCampaigns = await campaignModel.find()
         res.json({

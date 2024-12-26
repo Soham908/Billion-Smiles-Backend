@@ -2,10 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const userModel = require("./models/userModel");
 const authRoute = require('./routes/authRoute')
 const userPreferenceRoute = require('./routes/userPreferenceRoute')
 const campaignRoute = require('./routes/campaignRoute')
+const postRoute = require("./routes/postRoute")
+const commentRoute = require("./routes/postInteractionRoute")
+
 require("dotenv").config();
 
 mongoose
@@ -24,13 +26,14 @@ app.use(cors());
 app.use("/auth", authRoute)
 app.use("/user-cause-preference", userPreferenceRoute)
 app.use("/campaign", campaignRoute)
+app.use("/posts", postRoute)
+app.use("/posts/post-interaction", commentRoute)
 
 
 app.get("/", (req, res) => {
-  console.log('reached the backend of billion smiles');
   res.json({ message: 'reached backend of billion smiles' })
 })
 
-app.listen(3001, () => {
-  console.log("server has started on port " + 3001);
+app.listen(process.env.PORT, () => {
+  console.log("server has started on port " + process.env.PORT);
 });
