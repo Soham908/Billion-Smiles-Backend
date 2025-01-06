@@ -1,6 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-// Define Comment Interface
 export interface IComment {
   userId: mongoose.Types.ObjectId;
   commentUsername: string;
@@ -8,13 +7,11 @@ export interface IComment {
   createdAt?: Date;
 }
 
-// Define Like Interface
 export interface ILike {
   userId: mongoose.Types.ObjectId;
   likedUsername: string;
 }
 
-// Define Post Interface
 export interface IPost extends Document {
   userId: mongoose.Types.ObjectId;
   imageUrl: string;
@@ -28,7 +25,6 @@ export interface IPost extends Document {
   shares: number;
 }
 
-// Define Comment Schema
 const commentSchema = new Schema<IComment>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', required: true },
   commentUsername: { type: String },
@@ -36,7 +32,6 @@ const commentSchema = new Schema<IComment>({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Define Post Schema
 const postSchema = new Schema<IPost>({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'userModel', required: true },
   imageUrl: { type: String, required: true },
@@ -52,7 +47,6 @@ const postSchema = new Schema<IPost>({
   timestamps: true,
 });
 
-// Create Post Model
 const Post = mongoose.model<IPost>('Post', postSchema);
 
 export default Post;

@@ -21,6 +21,9 @@ company: string;
   progress: number;
   campaignStatus: 'Ongoing' | 'Completed' | 'Preset';
   createdAt: Date;
+  selectedFeatures: string[],
+  supporterCount: number,
+  supporterUsersRef: [mongoose.Types.ObjectId],
 }
 
 const campaignSchema = new Schema<ICampaign>(
@@ -49,6 +52,9 @@ const campaignSchema = new Schema<ICampaign>(
       default: 'Ongoing',
     },
     createdAt: { type: Date, default: Date.now },
+    selectedFeatures: [String],
+    supporterCount: {type: Number, default: 0},
+    supporterUsersRef: { type: [mongoose.Schema.Types.ObjectId] }
   },
   {
     collection: 'campaigns',

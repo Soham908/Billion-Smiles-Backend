@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import Post, { IPost } from "../models/postsModel"; // Assuming IPost is the interface for Post Model
-import userModel from "../models/userModel"; // Assuming IUser interface is defined
+import Post, { IPost } from "../models/postsModel";
+import userModel from "../models/userModel";
 
-// Create post controller
 export const createPostController = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(req.body);
@@ -32,16 +31,12 @@ export const createPostController = async (req: Request, res: Response): Promise
   }
 };
 
-// Fetch user posts controller
 export const fetchUserPostsController = async (req: Request, res: Response): Promise<void> => {
   try {
-    console.log(req.body)
     const fetchPostRequest: IPost[] = await Post.find({ userId: req.params.userId })
       .populate("userId")
       .populate("campaignId");
 
-    console.log(fetchPostRequest);
-    console.log("data sent")
     res.json({
       success: true,
       message: "User posts fetched",
@@ -56,7 +51,6 @@ export const fetchUserPostsController = async (req: Request, res: Response): Pro
   }
 };
 
-// Fetch all posts controller
 export const fetchAllPostsController = async (req: Request, res: Response): Promise<void> => {
   try {
     const fetchPostAllRequest: IPost[] = await Post.find()

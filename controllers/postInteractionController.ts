@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import Post, { IPost } from "../models/postsModel"; // Assuming IPost is the interface for Post Model
+import Post, { IPost } from "../models/postsModel";
 
-// Upload comment on post
 export const uploadCommentOnPostController = async (req: Request, res: Response) => {
   try {
     const { postId, userId, commentText, commentUsername } = req.body;
@@ -31,7 +30,6 @@ export const uploadCommentOnPostController = async (req: Request, res: Response)
   }
 };
 
-// Like post controller
 export const likePostController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { postId, userId, likedUsername } = req.body;
