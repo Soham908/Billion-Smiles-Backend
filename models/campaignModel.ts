@@ -3,7 +3,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface ICampaign extends Document {
   imageUrl: string;
   campaignTitle: string;
-  campaignCause: mongoose.Types.ObjectId; // Reference to Cause
+  // campaignCause: mongoose.Types.ObjectId; // Reference to Cause
+  campaignCause: string
   causeName: string;
   startDate: Date;
   endDate: Date;
@@ -15,7 +16,8 @@ export interface ICampaign extends Document {
 company: string;
   campaignManager: string;
   contactEmail: string;
-  ngoReference: mongoose.Types.ObjectId; // Reference to NGO
+  // ngoReference: mongoose.Types.ObjectId; // Reference to NGO
+  ngoReference: string;
   ngoName: string;
   location: string;
   progress: number;
@@ -24,13 +26,15 @@ company: string;
   selectedFeatures: string[],
   supporterCount: number,
   supporterUsersRef: [mongoose.Types.ObjectId],
+  targetLikes: number
 }
 
 const campaignSchema = new Schema<ICampaign>(
   {
     imageUrl: { type: String, required: true },
     campaignTitle: { type: String, required: true },
-    campaignCause: { type: mongoose.Schema.Types.ObjectId, ref: 'Cause'},
+    // campaignCause: { type: mongoose.Schema.Types.ObjectId, ref: 'Cause'},
+    campaignCause: String,
     causeName: { type: String, required: true },
     startDate: { type: Date, default: Date.now },
     endDate: { type: Date, required: false },
@@ -42,7 +46,8 @@ const campaignSchema = new Schema<ICampaign>(
     company: String,
     campaignManager: { type: String, required: true },
     contactEmail: { type: String, required: true },
-    ngoReference: { type: mongoose.Schema.Types.ObjectId, ref: 'NGO'},
+    // ngoReference: { type: mongoose.Schema.Types.ObjectId, ref: 'NGO'},
+    ngoReference: String,
     ngoName: { type: String },
     location: { type: String, required: true },
     progress: { type: Number, default: 0 },
@@ -54,7 +59,8 @@ const campaignSchema = new Schema<ICampaign>(
     createdAt: { type: Date, default: Date.now },
     selectedFeatures: [String],
     supporterCount: {type: Number, default: 0},
-    supporterUsersRef: { type: [mongoose.Schema.Types.ObjectId] }
+    supporterUsersRef: { type: [mongoose.Schema.Types.ObjectId] },
+    targetLikes: Number
   },
   {
     collection: 'campaigns',

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Post, { IPost } from "../models/postsModel";
+import { Campaign } from "../models/campaignModel";
 
 export const uploadCommentOnPostController = async (req: Request, res: Response) => {
   try {
@@ -32,8 +33,7 @@ export const uploadCommentOnPostController = async (req: Request, res: Response)
 
 export const likePostController = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { postId, userId, likedUsername } = req.body;
-    console.log(req.body);
+    const { postId, userId, likedUsername, campaignId } = req.body;
     const post: IPost | null = await Post.findById(postId).populate('userId').populate('campaignId');
 
     if (!post) {
@@ -51,7 +51,20 @@ export const likePostController = async (req: Request, res: Response): Promise<v
     }
 
     await post.save();
-    console.log(post)
+    // for now doing such that whenever someone likes an post related to a specific campaign and logo pops up, the progress shall be updated
+    // regardless if the user has done it first time or mnay times, will change it later
+    if(!hasLiked){
+      const progressUpdate = await Campaign.findById(campaignId)
+      if(!progressUpdate) throw new Error("campaign not found")
+      if (progressUpdate.campaignStatus !== 'Completed')
+      {
+        progressUpdate.amountRaised += progressUpdate.targetAmount/progressUpdate.targetLikes
+        progressUpdate.progress = parseInt((progressUpdate.amountRaised/progressUpdate.targetAmount * 100).toFixed(0))
+        if (progressUpdate.progress === 100) progressUpdate.campaignStatus = "Completed"
+        await progressUpdate.save()
+      }
+      console.log(progressUpdate)
+    }
     res.json({
       message: "Like done",
       success: true,
