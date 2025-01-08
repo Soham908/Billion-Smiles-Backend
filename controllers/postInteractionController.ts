@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Post, { IPost } from "../models/postsModel";
 import { Campaign } from "../models/campaignModel";
+import { ActivityLog } from "../models/activityLogModel";
 
 export const uploadCommentOnPostController = async (req: Request, res: Response) => {
   try {
@@ -60,7 +61,10 @@ export const likePostController = async (req: Request, res: Response): Promise<v
       {
         progressUpdate.amountRaised += progressUpdate.targetAmount/progressUpdate.targetLikes
         progressUpdate.progress = parseInt((progressUpdate.amountRaised/progressUpdate.targetAmount * 100).toFixed(0))
-        if (progressUpdate.progress === 100) progressUpdate.campaignStatus = "Completed"
+        if (progressUpdate.progress === 100) {
+          progressUpdate.campaignStatus = "Completed"
+          const activityLog = await ActivityLog.create({ campaignId: campaignId, companyId: progressUpdate.companyRef, campaignTitle: progressUpdate.campaignTitle, message: "Congrats ! The campaign was completed.", activityType: "Campaign Completed" })
+        }
         await progressUpdate.save()
       }
       console.log(progressUpdate)

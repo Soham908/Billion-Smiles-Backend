@@ -14,6 +14,7 @@ export interface ICampaign extends Document {
   amountRaised: number;
 //   company: mongoose.Types.ObjectId; // Reference to Company
 company: string;
+companyRef: mongoose.Types.ObjectId;
   campaignManager: string;
   contactEmail: string;
   // ngoReference: mongoose.Types.ObjectId; // Reference to NGO
@@ -44,6 +45,7 @@ const campaignSchema = new Schema<ICampaign>(
     amountRaised: { type: Number, default: 0 },
     // company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
     company: String,
+    companyRef: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
     campaignManager: { type: String, required: true },
     contactEmail: { type: String, required: true },
     // ngoReference: { type: mongoose.Schema.Types.ObjectId, ref: 'NGO'},

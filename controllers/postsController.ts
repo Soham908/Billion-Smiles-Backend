@@ -9,6 +9,7 @@ export const createPostController = async (req: Request, res: Response): Promise
     const createPostRequest: IPost = await Post.create(req.body);
     console.log(createPostRequest);
     
+    // for giving first badge
     const userPosts = await Post.find({ userId: req.body.userId });
     if (userPosts.length === 1) {
       await userModel.updateOne(

@@ -23,6 +23,7 @@ export interface IPost extends Document {
   comments: IComment[];
   visibility: 'public' | 'private';
   shares: number;
+  companyLogoUrl: string;
 }
 
 const commentSchema = new Schema<IComment>({
@@ -43,6 +44,7 @@ const postSchema = new Schema<IPost>({
   comments: [commentSchema],
   visibility: { type: String, enum: ['public', 'private'], default: 'public' },
   shares: { type: Number, default: 0 },
+  companyLogoUrl: String
 }, {
   timestamps: true,
 });
