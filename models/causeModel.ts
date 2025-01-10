@@ -15,7 +15,7 @@ export interface ICause extends Document {
   createdAt: Date;
 }
 
-const causeSchema = new Schema<ICause>(
+export const causeSchema = new Schema<ICause>(
   {
     causeTitle: { type: String, required: true },
     description: { type: String, required: true },

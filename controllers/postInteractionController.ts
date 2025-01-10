@@ -35,14 +35,14 @@ export const uploadCommentOnPostController = async (req: Request, res: Response)
 export const likePostController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { postId, userId, likedUsername, campaignId } = req.body;
+    console.log(req.body);
     const post: IPost | null = await Post.findById(postId).populate('userId').populate('campaignId');
-
     if (!post) {
       throw new Error("Post not found");
     }
 
+    console.log(post);
     const hasLiked = post.likedBy.some((like) => like.userId.toString() === userId.toString());
-
     if (hasLiked) {
       post.likes -= 1;
       post.likedBy = post.likedBy.filter((user) => user.userId.toString() !== userId.toString());

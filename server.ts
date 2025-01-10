@@ -7,7 +7,7 @@ import userPreferenceRoute from './routes/userPreferenceRoute';
 import campaignRoute from './routes/campaignRoute';
 import postRoute from './routes/postRoute';
 import commentRoute from './routes/postInteractionRoute';
-import ngoRoute from './routes/ngoDataRoute';
+import causeRoute from './routes/causeRoute';
 dotenv.config();
 
 const app = express();
@@ -31,7 +31,7 @@ app.use("/user-cause-preference", userPreferenceRoute);
 app.use("/campaign", campaignRoute);
 app.use("/posts", postRoute);
 app.use("/posts/post-interaction", commentRoute);
-app.use("/ngo-data", ngoRoute);
+app.use("/cause", causeRoute);
 
 // Root route
 app.get("/", (req: Request, res: Response) => {

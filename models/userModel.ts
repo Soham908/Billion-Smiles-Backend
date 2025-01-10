@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { causeSchema, ICause } from "./causeModel";
 
 interface INGODetails {
   ngoName: string,
@@ -15,7 +16,8 @@ export interface IUser extends Document {
   userCausePreferences: string[];
   badgesEarned: string[];
   userType?: "User" | "NGO" | "Company",
-  ngoDetails: INGODetails
+  ngoDetails: INGODetails,
+  causes: ICause[]
 }
 
 const userSchema = new Schema<IUser>(
@@ -29,7 +31,8 @@ const userSchema = new Schema<IUser>(
       enum: ["User", "NGO", "Company"],
       default: 'User',
     },
-    ngoDetails: ngoDetailsSchema
+    ngoDetails: ngoDetailsSchema,
+    causes: { type: [causeSchema] }
   },
   {
     collection: "userData",
