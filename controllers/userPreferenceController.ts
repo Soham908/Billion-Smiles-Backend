@@ -1,21 +1,20 @@
 import { Request, Response } from "express";
-import userModel, { IUser } from "../models/userModel"; // Assuming IUser is the interface for the User Model
+import userModel, { IUser } from "../models/userModel";
 
-// Save user preferences
 export const saveUserPreferencesFunc = async (req: Request, res: Response) => {
-  const { username, causePreferences } = req.body;
+  const { userId, userCausePreferences } = req.body;
   try {
-    const savePreferRequest: IUser | null = await userModel.findOneAndUpdate(
-      { username },
-      { userCausePreferences: causePreferences },
+    console.log(userId);
+    const savePreferRequest = await userModel.findByIdAndUpdate(
+      userId,
+      { userCausePreferences: userCausePreferences },
       { new: true }
     );
+    console.log(savePreferRequest);
+    res.json({ 
+      success: true, message: "User preference saved", userData: savePreferRequest 
+    });
 
-    if (!savePreferRequest) {
-      return res.status(404).json({ message: "User not found", success: false });
-    }
-
-    res.json({ success: true, message: "User preference saved", savePreferRequest });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: "Server error", success: false });

@@ -3,11 +3,8 @@ import Post, { IPost } from "../models/postsModel";
 import userModel from "../models/userModel";
 
 export const createPostController = async (req: Request, res: Response): Promise<void> => {
-  try {
-    console.log(req.body);
-    
+  try {    
     const createPostRequest: IPost = await Post.create(req.body);
-    console.log(createPostRequest);
     
     // for giving first badge
     const userPosts = await Post.find({ userId: req.body.userId });

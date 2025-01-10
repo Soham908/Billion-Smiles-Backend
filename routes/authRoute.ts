@@ -1,10 +1,12 @@
 import express, { Request, Response } from 'express';
-import { authControllerLoginFunc, authControllerSignupFunc } from '../controllers/authController';
+import { authControllerLoginFunc, authControllerSignupFunc, saveNgoDetailsController } from '../controllers/authController';
 
 const router = express.Router();
 
 // Define base route "/auth"
-router.post("/login", (req: Request, res: Response) => authControllerLoginFunc(req, res));
-router.post("/signup", (req: Request, res: Response) => authControllerSignupFunc(req, res));
+router.post("/login", authControllerLoginFunc);
+router.post("/signup", authControllerSignupFunc);
+
+router.post("/ngo-details", saveNgoDetailsController)
 
 export default router;

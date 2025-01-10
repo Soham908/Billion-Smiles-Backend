@@ -1,10 +1,21 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+interface INGODetails {
+  ngoName: string,
+  ngoRegisteration: string
+}
+const ngoDetailsSchema = new Schema<INGODetails>({
+  ngoName: String,
+  ngoRegisteration: String
+})
+
 export interface IUser extends Document {
   username: string;
   password: string;
   userCausePreferences: string[];
   badgesEarned: string[];
+  userType?: "User" | "NGO" | "Company",
+  ngoDetails: INGODetails
 }
 
 const userSchema = new Schema<IUser>(
@@ -13,6 +24,12 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     userCausePreferences: { type: [String], default: [] },
     badgesEarned: { type: [String], default: [] },
+    userType: {
+      type: String,
+      enum: ["User", "NGO", "Company"],
+      default: 'User',
+    },
+    ngoDetails: ngoDetailsSchema
   },
   {
     collection: "userData",
