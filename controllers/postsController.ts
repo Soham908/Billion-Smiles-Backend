@@ -15,6 +15,7 @@ export const createPostController = async (req: Request, res: Response): Promise
         { $push: { badgesEarned: "First Post Pioneer" } }
       );
     }
+    console.log(createPostRequest)
 
     res.json({
       success: true,

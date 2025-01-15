@@ -6,12 +6,13 @@ export const authControllerLoginFunc = async (req: Request, res: Response): Prom
   const incomingData: { username: string; password: string } = req.body;
   try {
     const loginRequest = await userModel.findOne({ username: incomingData.username });
-
+    console.log(loginRequest, req.body)
     if (loginRequest) {
       if (loginRequest.password === incomingData.password) {
         res.json({
           success: true, message: "Login done", userData: loginRequest
         });
+        console.log(loginRequest)
 
       } else {
         res.json({ success: false, message: "Wrong user or password" });
