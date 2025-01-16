@@ -17,7 +17,8 @@ export interface IUser extends Document {
   badgesEarned: string[];
   userType?: "User" | "NGO" | "Company",
   ngoDetails: INGODetails,
-  causes: mongoose.Types.ObjectId[]
+  causes: mongoose.Types.ObjectId[],
+  userPostsRef: mongoose.Types.ObjectId[]
 }
 
 const userSchema = new Schema<IUser>(
@@ -32,7 +33,8 @@ const userSchema = new Schema<IUser>(
       default: 'User',
     },
     ngoDetails: ngoDetailsSchema,
-    causes: { type: [mongoose.Schema.Types.ObjectId] }
+    causes: { type: [mongoose.Schema.Types.ObjectId] },
+    userPostsRef: { type: [mongoose.Schema.Types.ObjectId], ref: 'Post' }
   },
   {
     collection: "userData",

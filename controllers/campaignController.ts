@@ -8,6 +8,7 @@ export const fetchCampaignsController = async (req: Request, res: Response): Pro
     Company.findById("")
     const fetchAllCampaigns: ICampaign[] = await Campaign.find().populate('companyRef'); // Assuming find() returns ICampaign[]
     console.log(fetchAllCampaigns)
+
     res.json({
       success: true,
       message: "All campaigns fetched successfully",
@@ -25,7 +26,7 @@ export const fetchCampaignsController = async (req: Request, res: Response): Pro
 export const incrementSupporterCountController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { campaignId, userId } = req.body
-    const supportCampaignResponse = await Campaign.findByIdAndUpdate(req.body.campaignId, { $inc: { supporterCount: 1 }, $push: { supporterUsersRef: req.body.userId } }, { new: true })
+    const supportCampaignResponse = await Campaign.findByIdAndUpdate(req.body.campaignId, { $inc: { supporterCount: 1 }, $push: { supporterUsersRef: req.body.userId } }, { new: true }).populate('companyRef')
     console.log(supportCampaignResponse)
     const activityLog = await ActivityLog.create({ campaignId: campaignId, campaignTitle: supportCampaignResponse?.campaignTitle, companyId: supportCampaignResponse?.companyRef, activityType: "New Supporter", message: "Congrats you have received a new supporter" })
     console.log(activityLog);

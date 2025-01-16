@@ -12,9 +12,12 @@ export const createPostController = async (req: Request, res: Response): Promise
     if (userPosts.length === 1) {
       await userModel.updateOne(
         { _id: req.body.userId },
-        { $push: { badgesEarned: "First Post Pioneer" } }
+        { $push: { badgesEarned: "First Post Pioneer", userPostsRef: createPostRequest._id } }
       );
+    } else {
+      await userModel.updateOne({ _id: req.body.userId }, { $push: { userPostsRef: createPostRequest._id }})
     }
+    
     console.log(createPostRequest)
 
     res.json({

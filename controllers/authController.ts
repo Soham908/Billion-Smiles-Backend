@@ -74,3 +74,15 @@ export const saveNgoDetailsController = async (req: Request, res: Response): Pro
     })
   }
 }
+
+export const fetchViewProfileUserDataController = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    const fetchViewProfileUserDataResponse = await User.findById(req.params.userId);
+
+    res.json({ success: true, message: "viewUser fetched", viewUserData: fetchViewProfileUserDataResponse });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "fetching failed" });
+  }
+};

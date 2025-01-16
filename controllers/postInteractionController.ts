@@ -41,13 +41,14 @@ export const likePostController = async (req: Request, res: Response): Promise<v
       throw new Error("Post not found");
     }
 
-    console.log(post);
+    // console.log(post);
     const hasLiked = post.likedBy.some((like) => like.userId.toString() === userId.toString());
     if (hasLiked) {
       post.likes -= 1;
       post.likedBy = post.likedBy.filter((user) => user.userId.toString() !== userId.toString());
     } else {
       post.likes += 1;
+      
       post.likedBy.push({ userId: userId, likedUsername: likedUsername });
     }
 
