@@ -27,9 +27,23 @@ export const createNewCauseController = async (req: Request, res: Response) => {
 export const fetchNgoCausesController = async (req: Request, res: Response) => {
   try {
     console.log(req.params)
-    const fetchCauseResponse = await Cause.find(req.params.ngoId);
-
+    const fetchCauseResponse = await Cause.find({ ngoRef: req.params.ngoId });
+    console.log(fetchCauseResponse)
     res.json({ success: true, message: "cause fetched", causeData: fetchCauseResponse });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "fetching failed" });
+  }
+};
+
+export const supportCauseByUserController = async (req: Request, res: Response) => {
+  try {
+    const supportCauseResponse = await Cause.findByIdAndUpdate(req.body.causeId,
+      { $push: { supporterUsersRef: req.body.userId }, $inc: { supporterCount: 1 } },
+      { new: true });
+
+      console.log(supportCauseResponse)
+    res.json({ success: true, message: "cause fetched", causeData: supportCauseResponse });
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "fetching failed" });

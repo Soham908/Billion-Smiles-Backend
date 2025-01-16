@@ -13,6 +13,8 @@ export interface ICause extends Document {
   ngoRef: mongoose.Types.ObjectId; // Reference to NGO
   ngoName: string;
   createdAt: Date;
+  supporterUsersRef: mongoose.Types.ObjectId[];
+  supporterCount: number
 }
 
 export const causeSchema = new Schema<ICause>(
@@ -29,8 +31,9 @@ export const causeSchema = new Schema<ICause>(
     ngoRef: { type: mongoose.Schema.Types.ObjectId, ref: 'NGO', required: true },
     ngoName: String,
     createdAt: { type: Date, default: Date.now },
+    supporterUsersRef: { type: [mongoose.Schema.Types.ObjectId], ref: 'userModel' },
+    supporterCount: { type: Number, default: 0 }
   },
-
   {
     collection: 'causes',
   }

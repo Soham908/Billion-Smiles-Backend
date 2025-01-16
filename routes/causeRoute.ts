@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createNewCauseController, fetchNgoCausesController } from "../controllers/causeController";
+import { createNewCauseController, fetchNgoCausesController, supportCauseByUserController } from "../controllers/causeController";
 const router = Router()
 
 // base route: "/cause"
@@ -7,5 +7,7 @@ const router = Router()
 router.post("/create-new-cause", createNewCauseController)
 
 router.get("/fetch-ngo-causes/:ngoId", fetchNgoCausesController)
+
+router.post("/support-cause-by-user", supportCauseByUserController)
 
 export default router
